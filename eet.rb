@@ -21,8 +21,10 @@ module EET
   def self.format(time = Time.now, base = 0)
     return time.strftime("%H:%M") if base == 0
 
-    hour = time.hour % (24 / 2**base)
-    suffix = (time.hour / (24 / 2**base)).to_s(2).tr("01", "AP") + "M"
+    interval = 24 / 2**base
+    hour = time.hour % interval
+    hour = interval if hour == 0
+    suffix = (time.hour / interval).to_s(2).tr("01", "AP") + "M"
 
     "#{hour}:#{time.strftime('%M')} #{suffix}"
   end
